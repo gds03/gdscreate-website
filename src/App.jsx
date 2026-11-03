@@ -1,12 +1,46 @@
-import React, { useState } from 'react';
-import { 
-  Terminal, Cpu, Cloud, Zap, ShieldCheck, ExternalLink, 
-  Layers, ArrowUpRight, CheckCircle2, ChevronRight, Mail, Boxes, Bot, Server, Activity, Workflow, Gauge, Sparkles, Sliders, Check
+import {
+  Terminal, Cpu, Cloud, Zap, ShieldCheck, ExternalLink,
+  Layers, ChevronRight, Bot, Server, Activity, Workflow, Sparkles, BookOpen, GitBranch, BadgeCheck
 } from 'lucide-react';
 
+const proofStrip = [
+  { value: 'Since 2010', label: 'Building with .NET', source: 'Career history on LinkedIn' },
+  { value: '4 years', label: 'AWS in production', source: 'Career history on LinkedIn' },
+  { value: '1 year', label: 'Azure', source: 'Career history on LinkedIn' },
+  { value: 'AWS Associate', label: 'Certified Solutions Architect', source: 'Verify on Credly', href: 'https://www.credly.com/badges/1ec354f2-1a09-49ef-9413-bbbdd5ca0ad4' }
+];
+
+const openSource = [
+  {
+    name: 'federated-identity-poc',
+    url: 'https://github.com/gds03/federated-identity-poc',
+    description: 'Local federated identity & access management in .NET 10 and React: OAuth 2.0 client credentials, RS256 tokens, JWKS, OIDC with PKCE, and route-level access control. Each API can validate tokens locally or ask the central service, trading revocation speed against an extra network hop.',
+    tags: ['.NET 10', 'OAuth 2.0 / OIDC', 'React', 'SQLite']
+  },
+  {
+    name: 'agentic-ai-team',
+    url: 'https://github.com/gds03/agentic-ai-team',
+    description: 'A virtual software team of Claude agents (architect, developers, reviewer, QA, scrum master, researcher) driven by slash commands, a backlog and docs, with a human product owner.',
+    tags: ['Claude', 'Multi-agent', 'Workflow']
+  },
+  {
+    name: 'APIWorker',
+    url: 'https://github.com/gds03/APIWorker',
+    description: 'Two processes that talk through a broker: a RESTful HATEOAS API and an event-sourced worker. Placing an order triggers asynchronous payment processing across separate services.',
+    tags: ['.NET', 'Event sourcing', 'RabbitMQ', 'Docker']
+  }
+];
+
+const articles = [
+  { title: 'Building Robust Ecommerce Workflows Using MassTransit Sagas and EFCore', tags: ['MassTransit', 'Sagas', 'EFCore'], url: 'https://medium.com/@goncalordias/building-robust-ecommerce-workflows-using-masstransit-sagas-and-efcore-92a53ab394c0' },
+  { title: 'Building Lightweight .NET Minimal API Services on AWS Lambda', tags: ['.NET', 'AWS Lambda', 'Serverless'], url: 'https://medium.com/@goncalordias/building-lightweight-net-minimal-api-services-on-aws-lambda-c319d0132151' },
+  { title: 'Centralizing Security Controls Across AWS Accounts Using AWS Organizations', tags: ['AWS', 'Security', 'Organizations'], url: 'https://medium.com/@goncalordias/centralizing-security-controls-across-aws-accounts-using-aws-organizations-aa4011adc12c' },
+  { title: 'AWS Accounts vs Azure Subscriptions: Architecture and Management Explained', tags: ['AWS', 'Azure', 'Architecture'], url: 'https://medium.com/@goncalordias/aws-accounts-vs-azure-subscriptions-architecture-and-management-explained-2fc5df332a39' },
+  { title: 'Deploy Software Without Pipelines: Practical Options for Developers', tags: ['Deployment', 'DevOps'], url: 'https://medium.com/@goncalordias/deploy-software-without-pipelines-practical-options-for-developers-bf189b793cb3' },
+  { title: "PostgreSQL's Advanced Features That Outpace SQL Server in 2025", tags: ['PostgreSQL', 'SQL Server'], url: 'https://medium.com/@goncalordias/postgresqls-advanced-features-that-outpace-sql-server-in-2025-10e90501fd79' }
+];
+
 export default function App() {
-  const [velocityMultiplier, setVelocityMultiplier] = useState(5);
-  const [activeTab, setActiveTab] = useState('all');
 
   // Case Studies Data
   const caseStudies = [
@@ -64,22 +98,6 @@ export default function App() {
     }
   ];
 
-  // Velocity Calculator Estimates (Standard Days vs AI Virtual Team Days)
-  const calcEstimates = (multiplier) => {
-    const baseScaffold = 14;
-    const baseIntegration = 21;
-    const baseInfra = 10;
-
-    return {
-      scaffold: Math.max(1, Math.round(baseScaffold / multiplier)),
-      integration: Math.max(2, Math.round(baseIntegration / multiplier)),
-      infra: Math.max(1, Math.round(baseInfra / multiplier)),
-      savedDays: Math.round((baseScaffold + baseIntegration + baseInfra) * (1 - 1 / multiplier))
-    };
-  };
-
-  const estimates = calcEstimates(velocityMultiplier);
-
   return (
     <div className="min-h-screen bg-[#0b0f17] text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-slate-950">
       {/* Background Subtle Grid */}
@@ -95,10 +113,11 @@ export default function App() {
             </span>
             <span className="text-zinc-500 text-sm font-normal hidden sm:inline">/ AI Solutions Architect & Systems Lead</span>
           </a>
-          <nav className="flex items-center gap-6 text-sm text-zinc-400 font-medium">
-            <a href="#ai-framework" className="hover:text-emerald-400 transition-colors">AI Framework</a>
+          <nav className="hidden md:flex items-center gap-6 text-sm text-zinc-400 font-medium">
+            <a href="#about" className="hover:text-emerald-400 transition-colors">About</a>
+            <a href="#open-source" className="hover:text-emerald-400 transition-colors">Open Source</a>
             <a href="#architectures" className="hover:text-emerald-400 transition-colors">Architectures</a>
-            <a href="#stack" className="hover:text-emerald-400 transition-colors">Tech Matrix</a>
+            <a href="#writing" className="hover:text-emerald-400 transition-colors">Writing</a>
             <a href="#contact" className="hover:text-emerald-400 transition-colors">Contact</a>
           </nav>
         </div>
@@ -118,7 +137,7 @@ export default function App() {
             </span> & Enterprise Cloud Systems.
           </h1>
           <p className="text-lg md:text-xl text-zinc-400 max-w-3xl leading-relaxed">
-            Combining 8+ years of enterprise cloud engineering with AI virtual teams (Claude, n8n, multi-agent frameworks) to design, scale, and deliver complex cloud solutions at unmatched velocity.
+            Combining .NET and cloud engineering since 2010 with AI virtual teams (Claude, n8n, multi-agent frameworks) to design, scale, and deliver complex cloud solutions faster. Performance and savings figures on this site are estimates.
           </p>
         </div>
 
@@ -135,15 +154,47 @@ export default function App() {
         </div>
       </section>
 
+      {/* Proof strip */}
+      <section aria-label="Proof" className="max-w-6xl mx-auto px-6 pb-12">
+        <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {proofStrip.map((item) => (
+            <li key={item.label} className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/80 text-center">
+              <span className="block text-xl md:text-2xl font-bold text-slate-100">{item.value}</span>
+              <span className="block text-xs text-zinc-400 mt-1">{item.label}</span>
+              {item.href ? (
+                <a href={item.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[10px] text-emerald-400/80 hover:text-emerald-300 mt-2 font-mono">
+                  <BadgeCheck size={12} /> {item.source}
+                </a>
+              ) : (
+                <span className="block text-[10px] text-zinc-500 mt-2 font-mono">Source: {item.source}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* About */}
+      <section id="about" className="max-w-6xl mx-auto px-6 py-16 border-t border-zinc-800/60 grid md:grid-cols-3 gap-8">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">About</h2>
+          <p className="text-emerald-400/80 text-sm font-mono">A pragmatic cloud architect</p>
+        </div>
+        <div className="md:col-span-2 space-y-4 text-zinc-400 text-sm md:text-base leading-relaxed">
+          <p>I'm a pragmatic person who loves simplicity in software. I don't believe building complex systems is the way to go, because software shouldn't be just for some: it should be for all.</p>
+          <p>I bring neutral energy to teams and try to simplify processes rather than complicate them. My strength is shortening the path between strategic vision and technical detail, translating business goals into clear, actionable development.</p>
+          <p>I also absorb domain details quickly, which lets me understand your business deeply and build solutions that fit it.</p>
+        </div>
+      </section>
+
       {/* AI Agentic Virtual Team & Velocity Framework (Interactive Section) */}
       <section id="ai-framework" className="max-w-6xl mx-auto px-6 py-16 border-t border-zinc-800/60 space-y-12">
         <div>
           <div className="inline-flex items-center gap-2 text-emerald-400 text-xs font-mono mb-2">
             <Sparkles size={14} /> AGENTIC LEVERAGE MODEL
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">AI Virtual Team & Agentic Velocity Engine</h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">AI Virtual Team & Agentic Delivery</h2>
           <p className="text-zinc-400 text-sm max-w-3xl leading-relaxed">
-            By shifting from manual syntax typing to high-agency architectural governance, I deploy automated multi-agent pipelines (Claude 3.7 & n8n) that deliver the output of a full engineering team while maintaining enterprise security and cloud standards.
+            By shifting from manual syntax typing to high-agency architectural governance, I deploy automated multi-agent pipelines (Claude & n8n) that deliver the output of a full engineering team while maintaining enterprise security and cloud standards.
           </p>
         </div>
 
@@ -155,7 +206,7 @@ export default function App() {
             </div>
             <h3 className="font-bold text-slate-100 text-base">Multi-Agent Orchestration</h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              Leveraging Claude 3.7 & n8n workflow engines to route complex tasks across autonomous AI micro-agents.
+              Leveraging Claude & n8n workflow engines to route complex tasks across autonomous AI micro-agents.
             </p>
           </div>
 
@@ -175,7 +226,7 @@ export default function App() {
             </div>
             <h3 className="font-bold text-slate-100 text-base">Architectural Governance</h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              8+ years of production experience ensuring cloud security (IAM), zero deployment bottlenecks, and cost control.
+              Years of production experience ensuring cloud security (IAM), smooth deployments, and cost control.
             </p>
           </div>
 
@@ -189,69 +240,42 @@ export default function App() {
             </p>
           </div>
         </div>
+      </section>
 
-        {/* Interactive Leverage Calculator */}
-        <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-zinc-900/80 to-[#0b0f17] border border-zinc-800 space-y-6">
-          <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
-            <div>
-              <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-                <Gauge className="text-emerald-400" size={20} /> Interactive Delivery Acceleration Calculator
-              </h3>
-              <p className="text-xs text-zinc-400">Adjust the slider to simulate AI virtual team execution multiplier against standard manual development cycles.</p>
-            </div>
-            <div className="text-right font-mono">
-              <span className="text-2xl font-extrabold text-emerald-400">{velocityMultiplier}x</span>
-              <span className="text-xs text-zinc-500 block">Velocity Multiplier</span>
-            </div>
-          </div>
-
-          {/* Slider Control */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-400 font-mono">
-              <span>2x (Standard AI Assistant)</span>
-              <span>5x (Agentic Orchestration)</span>
-              <span>10x (Full Virtual Team)</span>
-            </div>
-            <input 
-              type="range" 
-              min="2" 
-              max="10" 
-              value={velocityMultiplier} 
-              onChange={(e) => setVelocityMultiplier(Number(e.target.value))}
-              className="w-full accent-emerald-400 cursor-pointer h-2 bg-zinc-800 rounded-lg"
-            />
-          </div>
-
-          {/* Impact Results Cards */}
-          <div className="grid sm:grid-cols-3 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-[#0b0f17]/90 border border-zinc-800/80 text-center">
-              <span className="text-xs text-zinc-400 font-mono block mb-1">Microservice Scaffolding</span>
-              <span className="text-xl font-bold text-emerald-400">{estimates.scaffold} Days</span>
-              <span className="text-[10px] text-zinc-500 block mt-1">vs 14 Days manual</span>
-            </div>
-            <div className="p-4 rounded-xl bg-[#0b0f17]/90 border border-zinc-800/80 text-center">
-              <span className="text-xs text-zinc-400 font-mono block mb-1">Ecosystem API Integration</span>
-              <span className="text-xl font-bold text-emerald-400">{estimates.integration} Days</span>
-              <span className="text-[10px] text-zinc-500 block mt-1">vs 21 Days manual</span>
-            </div>
-            <div className="p-4 rounded-xl bg-[#0b0f17]/90 border border-zinc-800/80 text-center">
-              <span className="text-xs text-zinc-400 font-mono block mb-1">IaC Cloud Provisioning</span>
-              <span className="text-xl font-bold text-emerald-400">{estimates.infra} Days</span>
-              <span className="text-[10px] text-zinc-500 block mt-1">vs 10 Days manual</span>
-            </div>
-          </div>
-
-          <div className="text-center text-xs text-emerald-400 font-mono pt-2 flex items-center justify-center gap-2">
-            <Check size={14} /> Estimated ~{estimates.savedDays} Engineering Days Saved Per Major Release Cycle
-          </div>
+      {/* Open Source */}
+      <section id="open-source" className="max-w-6xl mx-auto px-6 py-16 border-t border-zinc-800/60 space-y-8">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">Open Source</h2>
+          <p className="text-zinc-400 text-sm">Code you can read. These are learning and proof-of-concept projects, built with AI assistance (MIT licensed).</p>
         </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {openSource.map((repo) => (
+            <a key={repo.name} href={repo.url} target="_blank" rel="noreferrer" className="p-6 rounded-xl bg-zinc-900/40 border border-zinc-800/80 hover:border-emerald-500/30 transition-all group flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center gap-2 mb-3 text-emerald-400">
+                  <GitBranch size={18} />
+                  <h3 className="font-bold text-slate-100 group-hover:text-emerald-300 transition-colors font-mono text-sm break-all">{repo.name}</h3>
+                </div>
+                <p className="text-zinc-400 text-sm leading-relaxed">{repo.description}</p>
+              </div>
+              <div className="flex flex-wrap gap-2 pt-3 border-t border-zinc-800/40">
+                {repo.tags.map((tag) => (
+                  <span key={tag} className="text-xs font-mono px-2 py-1 rounded bg-zinc-800/60 text-zinc-400 border border-zinc-700/30">{tag}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+        <a href="https://github.com/gds03" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-emerald-400 transition-colors">
+          <Terminal size={16} /> More on GitHub <ExternalLink size={14} />
+        </a>
       </section>
 
       {/* Case Studies / Proof of Work */}
       <section id="architectures" className="max-w-6xl mx-auto px-6 py-16 border-t border-zinc-800/60 space-y-8">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">Systems Architecture & Proof of Work</h2>
-          <p className="text-zinc-400 text-sm">Key engagement outcomes across Contractor and Permanent positions.</p>
+          <p className="text-zinc-400 text-sm">Key engagement outcomes across Contractor and Permanent positions. Impact figures are my own estimates, not independently audited.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -284,7 +308,7 @@ export default function App() {
                 <p className="text-zinc-400 text-sm leading-relaxed my-3">{study.description}</p>
                 
                 <div className="p-3 rounded bg-[#0b0f17]/80 border border-zinc-800/80 text-xs text-zinc-300">
-                  <strong className="text-emerald-400 font-semibold">Impact:</strong> {study.impact}
+                  <strong className="text-emerald-400 font-semibold">Estimated impact:</strong> {study.impact}
                 </div>
               </div>
 
@@ -343,6 +367,36 @@ export default function App() {
         </div>
       </section>
 
+      {/* Writing */}
+      <section id="writing" className="max-w-6xl mx-auto px-6 py-16 border-t border-zinc-800/60 space-y-8">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">How I Think</h2>
+          <p className="text-zinc-400 text-sm">Articles on architecture, cloud, and shipping software, published on Medium.</p>
+        </div>
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {articles.map((article) => (
+            <li key={article.url}>
+              <a href={article.url} target="_blank" rel="noreferrer" className="h-full p-6 rounded-xl bg-zinc-900/40 border border-zinc-800/80 hover:border-emerald-500/30 transition-all group flex flex-col justify-between space-y-4">
+                <h3 className="font-bold text-slate-100 group-hover:text-emerald-300 transition-colors leading-snug">{article.title}</h3>
+                <div>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {article.tags.map((tag) => (
+                      <span key={tag} className="text-xs font-mono px-2 py-1 rounded bg-zinc-800/60 text-zinc-400 border border-zinc-700/30">{tag}</span>
+                    ))}
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
+                    <BookOpen size={14} /> Read on Medium <ExternalLink size={12} />
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a href="https://medium.com/@goncalordias" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-emerald-400 transition-colors">
+          All articles on Medium <ExternalLink size={14} />
+        </a>
+      </section>
+
       {/* Footer */}
       <footer id="contact" className="border-t border-zinc-800/80 py-12 bg-[#0b0f17]">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -350,7 +404,10 @@ export default function App() {
             <p className="font-bold text-slate-200">Gonçalo Dias</p>
             <p className="text-xs text-zinc-500">AI-Native Solutions Architect & Systems Lead</p>
           </div>
-          <div className="flex gap-6 text-sm text-zinc-400">
+          <div className="flex flex-wrap items-center gap-6 text-sm text-zinc-400">
+            <a href="https://www.linkedin.com/in/gds03/" target="_blank" rel="noreferrer" className="px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-sm transition-all">
+              Let's talk
+            </a>
             <a href="https://gdscreate.com" target="_blank" rel="noreferrer" className="hover:text-emerald-400 transition-colors">gdscreate.com</a>
             <a href="https://www.linkedin.com/in/gds03/" target="_blank" rel="noreferrer" className="hover:text-emerald-400 transition-colors">LinkedIn</a>
           </div>
