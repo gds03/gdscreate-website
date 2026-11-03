@@ -89,7 +89,7 @@ export default function App() {
       <header className="sticky top-0 z-50 backdrop-blur-md bg-[#0b0f17]/90 border-b border-zinc-800/60">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <a href="#" className="font-bold text-lg tracking-tight flex items-center gap-2">
-            <Boxes className="w-5 h-5 text-emerald-400" />
+            <img src="/logo.png" alt="gdscreate logo" className="h-10 w-10 object-contain" />
             <span className="bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400 bg-clip-text text-transparent">
               Gonçalo Dias
             </span>
