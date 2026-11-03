@@ -1,7 +1,16 @@
+import { useState } from 'react';
 import {
   Terminal, Cpu, Cloud, Zap, ShieldCheck, ExternalLink,
-  Layers, ChevronRight, Bot, Server, Activity, Workflow, Sparkles, BookOpen, GitBranch, BadgeCheck
+  Layers, ChevronRight, Bot, Server, Activity, Workflow, Sparkles, BookOpen, GitBranch, BadgeCheck, Menu, X
 } from 'lucide-react';
+
+const navLinks = [
+  { href: '#about', label: 'About' },
+  { href: '#open-source', label: 'Open Source' },
+  { href: '#architectures', label: 'Architectures' },
+  { href: '#writing', label: 'Writing' },
+  { href: '#contact', label: 'Contact' }
+];
 
 const proofStrip = [
   { value: 'Since 2010', label: 'Building with .NET', source: 'Career history on LinkedIn' },
@@ -41,6 +50,7 @@ const articles = [
 ];
 
 export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Case Studies Data
   const caseStudies = [
@@ -114,13 +124,35 @@ export default function App() {
             <span className="text-zinc-500 text-sm font-normal hidden sm:inline">/ AI Solutions Architect & Systems Lead</span>
           </a>
           <nav className="hidden md:flex items-center gap-6 text-sm text-zinc-400 font-medium">
-            <a href="#about" className="hover:text-emerald-400 transition-colors">About</a>
-            <a href="#open-source" className="hover:text-emerald-400 transition-colors">Open Source</a>
-            <a href="#architectures" className="hover:text-emerald-400 transition-colors">Architectures</a>
-            <a href="#writing" className="hover:text-emerald-400 transition-colors">Writing</a>
-            <a href="#contact" className="hover:text-emerald-400 transition-colors">Contact</a>
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} className="hover:text-emerald-400 transition-colors">{link.label}</a>
+            ))}
           </nav>
+          <button
+            type="button"
+            className="md:hidden p-2 -mr-2 text-zinc-300 hover:text-emerald-400 transition-colors"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
+        {menuOpen && (
+          <nav id="mobile-nav" className="md:hidden border-t border-zinc-800/60 bg-[#0b0f17]/95 px-6 py-3 flex flex-col text-sm font-medium text-zinc-300">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="py-3 border-b border-zinc-800/40 last:border-b-0 hover:text-emerald-400 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        )}
       </header>
 
       {/* Hero Section */}
